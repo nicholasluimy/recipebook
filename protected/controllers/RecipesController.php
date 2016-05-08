@@ -122,9 +122,18 @@ class RecipesController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Recipes');
+		//$dataProvider=new CActiveDataProvider('Recipes');
+		$components=Components::model()->findAll();
+		$recipes=Recipes::model()->findAll();
+		$final=array(); // final{recipeName->[[ingredient name, measurement name, quantity],] }
+		foreach($recipes as $recipe){
+			$final[$recipe->Name] = array();
+		}
+		foreach($components as $component){
+			array_push($final[$component->recipe->Name], array('ingredient' => $component->ingredient->Name, 'measurement' => $component->measurement->Name, 'quantity' => $component->Quantity));
+		}
 		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
+			'dataProvider'=>$final,
 		));
 	}
 

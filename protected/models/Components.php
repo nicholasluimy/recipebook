@@ -5,7 +5,7 @@
  *
  * The followings are the available columns in table 'Components':
  * @property integer $Id
- * @property integer $RecipieId
+ * @property integer $RecipeId
  * @property integer $IngredientId
  * @property integer $MeasurementId
  * @property integer $Quantity
@@ -13,7 +13,7 @@
  * The followings are the available model relations:
  * @property Ingredients $ingredient
  * @property Measurements $measurement
- * @property Recipes $recipie
+ * @property Recipes $recipe
  */
 class Components extends CActiveRecord
 {
@@ -33,11 +33,11 @@ class Components extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('RecipieId, IngredientId, MeasurementId, Quantity', 'required'),
-			array('RecipieId, IngredientId, MeasurementId, Quantity', 'numerical', 'integerOnly'=>true),
+			array('RecipeId, IngredientId, MeasurementId, Quantity', 'required'),
+			array('RecipeId, IngredientId, MeasurementId, Quantity', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('Id, RecipieId, IngredientId, MeasurementId, Quantity', 'safe', 'on'=>'search'),
+			array('Id, RecipeId, IngredientId, MeasurementId, Quantity', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -51,7 +51,7 @@ class Components extends CActiveRecord
 		return array(
 			'ingredient' => array(self::BELONGS_TO, 'Ingredients', 'IngredientId'),
 			'measurement' => array(self::BELONGS_TO, 'Measurements', 'MeasurementId'),
-			'recipie' => array(self::BELONGS_TO, 'Recipes', 'RecipieId'),
+			'recipe' => array(self::BELONGS_TO, 'Recipes', 'RecipeId'),
 		);
 	}
 
@@ -62,7 +62,7 @@ class Components extends CActiveRecord
 	{
 		return array(
 			'Id' => 'ID',
-			'RecipieId' => 'Recipie',
+			'RecipeId' => 'Recipe',
 			'IngredientId' => 'Ingredient',
 			'MeasurementId' => 'Measurement',
 			'Quantity' => 'Quantity',
@@ -88,7 +88,7 @@ class Components extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('Id',$this->Id);
-		$criteria->compare('RecipieId',$this->RecipieId);
+		$criteria->compare('RecipeId',$this->RecipeId);
 		$criteria->compare('IngredientId',$this->IngredientId);
 		$criteria->compare('MeasurementId',$this->MeasurementId);
 		$criteria->compare('Quantity',$this->Quantity);
