@@ -51,9 +51,33 @@ class RecipesController extends Controller
 	 */
 	public function actionView($id)
 	{
-		$this->render('view',array(
-			'model'=>$this->loadModel($id),
+		$processed = array();
+		$rawData=Components::model()->findAll(array("condition"=>"RecipeId = $id"));
+		foreach($rawData as $row){
+			//array_push($processed, array($row->ingredient->Name, $row->Quantity, $row->measurement->Name));
+			$row->IngredientId = $row->ingredient->Name;
+			$row->MeasurementId = $row->measurement->Name;
+		}
+		$dataProvider=new CArrayDataProvider($rawData, array(
+			'keyField' => 'Id',
+			'pagination'=>array(
+				'pageSize'=>10,
+			),
 		));
+// $dataProvider->getData() will return a list of arrays.
+
+
+
+
+
+		$this->render('view',array(
+			'dataProvider' => $dataProvider,
+			'model'=>$this->loadModel($id),
+			'rawData' => $rawData,
+
+		));
+
+
 	}
 
 	/**
@@ -122,8 +146,8 @@ class RecipesController extends Controller
 	 */
 	public function actionIndex()
 	{
-		//$dataProvider=new CActiveDataProvider('Recipes');
-		$components=Components::model()->findAll();
+		$dataProvider=new CActiveDataProvider('Recipes');
+		/*$components=Components::model()->findAll();
 		$recipes=Recipes::model()->findAll();
 		$final=array(); // final{recipeName->[[ingredient name, measurement name, quantity],] }
 		foreach($recipes as $recipe){
@@ -131,9 +155,9 @@ class RecipesController extends Controller
 		}
 		foreach($components as $component){
 			array_push($final[$component->recipe->Name], array('ingredient' => $component->ingredient->Name, 'measurement' => $component->measurement->Name, 'quantity' => $component->Quantity));
-		}
+		}*/
 		$this->render('index',array(
-			'dataProvider'=>$final,
+			'dataProvider'=>$dataProvider,
 		));
 	}
 

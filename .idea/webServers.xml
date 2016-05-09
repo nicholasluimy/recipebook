@@ -3,7 +3,7 @@
   <component name="WebServers">
     <option name="servers">
       <webServer id="dbb4ebda-79dc-4e56-a927-4c0967bca6c7" name="recipie server" url="http://128.199.129.162/recipes/">
-        <fileTransfer host="128.199.129.162" port="21" rootFolder="/var/www/html/recipes" username="root">
+        <fileTransfer host="128.199.205.209" port="21" rootFolder="/var/www/html/recipes" username="root">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" maxConnections="4" passiveMode="true" />
           </advancedOptions>
