@@ -86,20 +86,28 @@ class RecipesController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model=new Recipes;
+		$modelR =new Recipes;
+		$modelC =new Components;
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Recipes']))
+		if(isset($_POST['Recipes']) && isset($_POST['Components']))
 		{
-			$model->attributes=$_POST['Recipes'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->Id));
+			$modelR->attributes=$_POST['Recipes'];
+
+			if($modelR->save())
+				$modelC->attributes=$_POST['Components'];
+				$modelC->RecipeId = $modelR->Id;
+				$modelC->save();
+				$this->redirect(array('view','id'=>$modelR->Id));
 		}
 
+		$allIngredients = Ingredients::model()->getNamedOptions();
 		$this->render('create',array(
-			'model'=>$model,
+			'modelR'=>$modelR,
+			'modelC'=>$modelC,
+			'allIngredients'=>$allIngredients,
 		));
 	}
 

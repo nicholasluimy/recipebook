@@ -95,4 +95,15 @@ class Ingredients extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+
+	public function getNamedOptions()
+	{
+		$final = array();
+		$all = Ingredients::model()->findAll();
+		foreach($all as $ingredient){
+			array_push($final,[$ingredient->Id, $ingredient->Name] );
+		}
+		return $final;
+	}
+
 }

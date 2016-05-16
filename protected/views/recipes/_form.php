@@ -1,6 +1,7 @@
 <?php
 /* @var $this RecipesController */
-/* @var $model Recipes */
+/* @var $modelR Recipes */
+/* @var $modelC Components */
 /* @var $form CActiveForm */
 ?>
 
@@ -17,18 +18,38 @@
 
 	<p class="note">Fields with <span class="required">*</span> are required.</p>
 
-	<?php echo $form->errorSummary($model); ?>
+	<?php echo $form->errorSummary($modelR, $modelC); ?>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'Name'); ?>
-		<?php echo $form->textField($model,'Name',array('size'=>60,'maxlength'=>100)); ?>
-		<?php echo $form->error($model,'Name'); ?>
+		<?php echo $form->labelEx($modelR,'Name'); ?>
+		<?php echo $form->textField($modelR,'Name',array('size'=>60,'maxlength'=>100)); ?>
+		<?php echo $form->error($modelR,'Name'); ?>
+	</div>
+
+
+	<div class="row">
+		Ingredient: 
+		<?php echo CHtml::dropDownList("Ingredient", $modelC,
+			CHtml::listData(Ingredients::model()->findAll(),'Id','Name'), array('empty' => '(Select a category)')); ?>
+	</div>
+
+	<div class="row">
+		Measurement:
+		<?php echo CHtml::dropDownList("Measurement", $modelC,
+			CHtml::listData(Measurements::model()->findAll(),'Id','Name'), array('empty' => '(Select a category)')); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->labelEx($modelC,'Quantity'); ?>
+		<?php echo $form->textField($modelC,'Quantity'); ?>
+		<?php echo $form->error($modelC,'Quantity'); ?>
 	</div>
 
 	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
+		<?php echo CHtml::submitButton($modelR->isNewRecord ? 'Create' : 'Save'); ?>
 	</div>
 
 <?php $this->endWidget(); ?>
 
 </div><!-- form -->
+
